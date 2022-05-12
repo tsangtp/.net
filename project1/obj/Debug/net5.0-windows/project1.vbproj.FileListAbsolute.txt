@@ -1,0 +1,11 @@
+C:\Users\PUI\source\repos\project1\obj\Debug\net5.0-windows\project1.vbproj.AssemblyReference.cache
+C:\Users\PUI\source\repos\project1\obj\Debug\net5.0-windows\project1.Resources.resources
+C:\Users\PUI\source\repos\project1\obj\Debug\net5.0-windows\project1.findpassowrd.resources
+C:\Users\PUI\source\repos\project1\obj\Debug\net5.0-windows\project1.home.resources
+C:\Users\PUI\source\repos\project1\obj\Debug\net5.0-windows\project1.login.resources
+C:\Users\PUI\source\repos\project1\obj\Debug\net5.0-windows\project1.register.resources
+C:\Users\PUI\source\repos\project1\obj\Debug\net5.0-windows\project1.vbproj.GenerateResource.cache
+C:\Users\PUI\source\repos\project1\obj\Debug\net5.0-windows\project1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PUI\source\repos\project1\obj\Debug\net5.0-windows\project1.AssemblyInfoInputs.cache
+C:\Users\PUI\source\repos\project1\obj\Debug\net5.0-windows\project1.AssemblyInfo.vb
+C:\Users\PUI\source\repos\project1\obj\Debug\net5.0-windows\project1.vbproj.CoreCompileInputs.cache
