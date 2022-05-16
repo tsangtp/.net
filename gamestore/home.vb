@@ -50,7 +50,7 @@ Public Class home
         Dim game As SqlCommand = New SqlCommand($"select price from dbo.game where gid = {gid}", con)
         Dim cmd As SqlCommand = New SqlCommand($"insert into dbo.record(userid,gid,buydate,price)
         values ((select id from dbo.users where name =N'{login.txtname.Text}')
-                ,{gid},'{ DateTime.Now.ToString("MM/dd/yyyy HH:MM:ss")}',(select price from dbo.game where gid ={gid}))", con)
+                ,{gid},'{ DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss")}',(select price from dbo.game where gid ={gid}))", con)
         Dim item As SqlCommand = New SqlCommand($"update dbo.game set query -= 1 where gid ={gid}", con)
         Dim buy As SqlCommand = New SqlCommand($"update dbo.users set money -= (select price from dbo.game 
         where gid = {gid}) where name = N'{login.txtname.Text}'", con)
