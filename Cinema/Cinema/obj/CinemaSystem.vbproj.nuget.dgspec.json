@@ -1,0 +1,138 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\PUI\\source\\repos\\Cinema\\Cinema\\CinemaSystem.vbproj": {}
+  },
+  "projects": {
+    "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.BLL\\CinemaSystem.BLL.vbproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.BLL\\CinemaSystem.BLL.vbproj",
+        "projectName": "CinemaSystem.BLL",
+        "projectPath": "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.BLL\\CinemaSystem.BLL.vbproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.DAL\\CinemaSystem.DAL.vbproj": {
+                "projectPath": "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.DAL\\CinemaSystem.DAL.vbproj"
+              },
+              "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.Models\\CinemaSystem.Models.vbproj": {
+                "projectPath": "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.Models\\CinemaSystem.Models.vbproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.DAL\\CinemaSystem.DAL.vbproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.DAL\\CinemaSystem.DAL.vbproj",
+        "projectName": "CinemaSystem.DAL",
+        "projectPath": "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.DAL\\CinemaSystem.DAL.vbproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {
+              "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.Models\\CinemaSystem.Models.vbproj": {
+                "projectPath": "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.Models\\CinemaSystem.Models.vbproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.Models\\CinemaSystem.Models.vbproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.Models\\CinemaSystem.Models.vbproj",
+        "projectName": "CinemaSystem.Models",
+        "projectPath": "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.Models\\CinemaSystem.Models.vbproj",
+        "frameworks": {
+          "net472": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
+    "C:\\Users\\PUI\\source\\repos\\Cinema\\Cinema\\CinemaSystem.vbproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\PUI\\source\\repos\\Cinema\\Cinema\\CinemaSystem.vbproj",
+        "projectName": "CinemaSystem",
+        "projectPath": "C:\\Users\\PUI\\source\\repos\\Cinema\\Cinema\\CinemaSystem.vbproj",
+        "packagesPath": "C:\\Users\\PUI\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PUI\\source\\repos\\Cinema\\Cinema\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\PUI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0-windows7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0-windows7.0": {
+            "targetAlias": "net6.0-windows",
+            "projectReferences": {
+              "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.BLL\\CinemaSystem.BLL.vbproj": {
+                "projectPath": "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.BLL\\CinemaSystem.BLL.vbproj"
+              },
+              "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.Models\\CinemaSystem.Models.vbproj": {
+                "projectPath": "C:\\Users\\PUI\\source\\repos\\Cinema\\CinemaSystem.Models\\CinemaSystem.Models.vbproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
+          "dependencies": {
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
