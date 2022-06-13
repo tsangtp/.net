@@ -142,7 +142,7 @@ Public Class menu
     Private Sub createtxt() 'create a txt file and write in txt file
         Dim filename As String = Today.ToString("D")
         Dim sw As StreamWriter
-        Dim path As String = $"C:\Users\PUI\source\repos\iptest\bin\Debug\{filename}" ' path and file name
+    Dim path As String = $"C:\Users\PUI\source\repos\iptest\bin\Debug\{filename}.txt" ' path and file name
         If File.Exists(path) Then ' if path exist just write, if no just create txt
             sw = File.AppendText(path) 'write in
             If printcustomer.Count > 0 Then 'if printcustomer query bigger than 0
