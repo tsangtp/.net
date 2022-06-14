@@ -159,7 +159,6 @@ Public Class menu
         success.Size = New Size(20, 20)
         success.Text = "Success"
         success.AutoSize = True
-        success.Cursor = Cursors.Hand
         btnsuccess.Name = "Success"
         btnsuccess.Location = New Point(615, 50)
         btnsuccess.Size = New Size(25, 25)
@@ -172,7 +171,6 @@ Public Class menu
         fail.Size = New Size(20, 20)
         fail.Text = "Fail"
         fail.AutoSize = True
-        fail.Cursor = Cursors.Hand
         btnfail.Name = "Fail"
         btnfail.Location = New Point(675, 50)
         btnfail.Size = New Size(25, 25)
