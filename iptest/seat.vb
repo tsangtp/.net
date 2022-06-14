@@ -1,7 +1,8 @@
-﻿Public Class seat
+Public Class seat
     Private Sub seat_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        title.Text = menu.name
+        title.Text = menu.localname
         seat()
+        setting()
     End Sub
     Private Sub seat()
         Dim rows As Integer = 100
@@ -32,5 +33,37 @@
                 End If
             Next
         Next
+    End Sub
+    Private Sub setting()
+        Dim success As New Label
+        Dim btnsuccess As New Button
+        success.Name = "Success"
+        success.Location = New Point(600, 75)
+        success.Size = New Size(20, 20)
+        success.Text = "Success"
+        success.AutoSize = True
+        success.Cursor = Cursors.Hand
+        btnsuccess.Name = "Success"
+        btnsuccess.Location = New Point(615, 50)
+        btnsuccess.Size = New Size(25, 25)
+        btnsuccess.Enabled = False
+        btnsuccess.BackColor = Color.Green
+        Dim fail As New Label
+        Dim btnfail As New Button
+        fail.Name = "Fail"
+        fail.Location = New Point(675, 75)
+        fail.Size = New Size(20, 20)
+        fail.Text = "Fail"
+        fail.AutoSize = True
+        fail.Cursor = Cursors.Hand
+        btnfail.Name = "Fail"
+        btnfail.Location = New Point(675, 50)
+        btnfail.Size = New Size(25, 25)
+        btnfail.Enabled = False
+        btnfail.BackColor = Color.Red
+        Controls.Add(success)
+        Controls.Add(btnsuccess)
+        Controls.Add(fail)
+        Controls.Add(btnfail)
     End Sub
 End Class
