@@ -1,8 +1,8 @@
 Imports System.IO
 Imports System.Timers
-Imports System.Net.NetworkInformation
 Imports System.Data.SqlClient
-Imports System.Data
+Imports System.Threading
+
 Public Class menu
     Dim reader = File.OpenText("C:\Users\PUI\source\repos\iptest\bin\Debug\ip.txt") ' open the txt file
     Dim line As New ArrayList() ' save the txt file each line
@@ -11,103 +11,98 @@ Public Class menu
     Dim gif As New PictureBox 'save the gif
     Public local As New Dictionary(Of String, List(Of customer)) 'save values, location is key, other infomation is values
     Dim initbool = True ' check the first time boolean
-    Dim ConnectSuccess As Boolean = true
-    Dim ConnectIp As String
+    Dim ConnectSuccess As Boolean = True 'save server connection situation
+    Dim ConnectIp As String 'save server ip
     Public Class customer ' create a class to package information
         Public location As String
         Public pinok As Boolean
         Public time As String
         Public seat As String
         Public ip As String
-        Public Sub New(ByVal location As String, ByVal pinok As Boolean, ByVal time As String, ByVal seat As String, ByVal ip As String)
+        Public Sub New(ByVal location As String, ByVal pinok As Boolean, ByVal time As String, ByVal seat As String, ByVal ip As String) ' ping information
             Me.location = location
             Me.pinok = pinok
             Me.time = time
             Me.seat = seat
             Me.ip = ip
         End Sub
+        Public Sub New(ByVal location As String, ByVal pinok As Boolean, ByVal time As String, ByVal ip As String) ' server infomation
+            Me.location = location
+            Me.pinok = pinok
+            Me.time = time
+            Me.ip = ip
+        End Sub
     End Class
-    Private Sub t_Tick(sender As Object, e As EventArgs)
-        Threading.Thread.Sleep(200)
-        pin()
-    End Sub
-    Private Sub timer()
-        Dim time = File.OpenText("C:\Users\PUI\source\repos\iptest\bin\Debug\time.txt")
-        Dim t As Timer = New Timer()
-        t.Interval = time.ReadLine() 'each time to run
-        AddHandler t.Elapsed, AddressOf t_Tick
-        t.Start() ' timers start
+    Private Sub threading()
+        While True
+            pin()
+            Thread.Sleep(60000) ' every 1 minute to run
+        End While
     End Sub
     Private Sub pin() ' pin the ip address
-        Dim len As Integer = 0
-        Dim printcustomer As New List(Of customer) ' save the different values
-        'array for insert log
-        gifVisible(True) ' gif visible = Ture 
-        Dim itemquery As Integer = 1
-        For Each item As KeyValuePair(Of String, List(Of customer)) In local
-            Dim bool As Boolean = True
-            Dim customerlist As List(Of customer) = item.Value ' loop the local dictionary to get each value 
-            Dim customerlocation As String = item.Key ' loop the local dictionary to get each key 
-            Dim data As customer ' create a new class to store the information
-            If itemquery = local.Count Then
-                Try
-                    Dim con As New SqlConnection($"server={ConnectIp};uid=sa;pwd=77229943;database=HKU")
-                    con.Open()
-                    con.Close()
-                    If ConnectSuccess = False Then
-                        ConnectSuccess = True
-                        data = New customer(item.Key, ConnectSuccess, Today.Now.ToString("G"), "", ConnectIp)
-                        printcustomer.Add(data)
-                    Else
-                        ConnectSuccess = True
-                    End If
-                Catch
-                    If ConnectSuccess = True Then
-                        ConnectSuccess = False
-                        data = New customer(item.Key, ConnectSuccess, Today.Now.ToString("G"), "", ConnectIp)
-                        printcustomer.Add(data)
-                    Else
-                        ConnectSuccess = False
-                    End If
-                End Try
-                If ConnectSuccess = True Then
-                    btns(len).BackColor = Color.Green
-                Else
-                    btns(len).BackColor = Color.Red
-                End If
-            Else
-                For Each j In customerlist
-                    If My.Computer.Network.Ping(j.ip, 50) Then ' ping ip address
-                        If Not j.pinok = True And Not initbool Then ' if ping is ok but the txt file is different just store the information
-                            j.pinok = True
-                            data = New customer(j.location, j.pinok, j.time, j.seat, j.ip)
-                            printcustomer.Add(data)
+        Dim print As New List(Of customer) ' save the different data
+        Dim len As Integer = 0 ' button number
+        For Each item As KeyValuePair(Of String, List(Of customer)) In local 'each item key and value of local
+            Dim customerlist As List(Of customer) = item.Value
+            Dim customerlocation As String = item.Key
+            Dim data As customer
+            Dim bool As Boolean = True ' check ping
+            For Each value In customerlist
+                If value.ip = ConnectIp Then
+                    Try
+                        Dim con As New SqlConnection($"server={ConnectIp};uid=sa;pwd=sa;database=test;")
+                        con.Open()
+                        con.Close()
+                        If ConnectSuccess = False Then
+                            ConnectSuccess = True
+                            data = New customer(value.location, ConnectSuccess, Today.Now.ToString("G"), value.ip)
                         Else
-                            j.pinok = True
+                            ConnectSuccess = True
+                        End If
+                    Catch ex As Exception
+                        If ConnectSuccess = True Then
+                            ConnectSuccess = False
+                            data = New customer(value.location, ConnectSuccess, Today.Now.ToString("G"), value.ip)
+                        Else
+                            ConnectSuccess = False
+                        End If
+                    End Try
+                    If ConnectSuccess = True Then
+                        btns(len).BackColor = Color.Green
+                    Else
+                        btns(len).BackColor = Color.Red
+                    End If
+                Else
+                    If My.Computer.Network.Ping(value.ip, 50) Then
+                        If Not value.pinok = True And Not initbool Then
+                            value.pinok = True
+                            data = New customer(value.location, value.pinok, value.time, value.seat, value.ip)
+                            print.Add(data)
+                        Else
+                            value.pinok = True
                         End If
                     Else
-                        If j.pinok = True And Not initbool Then ' if ping is not ok but the txt file is different just store the information
-                            j.pinok = False
-                            data = New customer(j.location, j.pinok, j.time, j.seat, j.ip)
-                            printcustomer.Add(data)
+                        If value.pinok = True And Not initbool Then
+                            value.pinok = False
+                            data = New customer(value.location, value.pinok, value.time, value.seat, value.ip)
+                            print.Add(data)
                         Else
-                            j.pinok = False
+                            value.pinok = False
                         End If
                         bool = False
                     End If
-                Next
-                If bool Then 'check each customer, if has one customer just the local button background = red
-                    btns(len).BackColor = Color.Green
-                Else
-                    btns(len).BackColor = Color.Red
                 End If
-                len += 1
+            Next
+            If bool Then 'check each customer, if has one customer just the local button background = red
+                btns(len).BackColor = Color.Green
+            Else
+                btns(len).BackColor = Color.Red
             End If
-            itemquery += 1
+            len += 1
         Next
         initbool = False
         gifVisible(False) ' gif visible = False is not display
-        createtxt(printcustomer) ' create a log file or write in log file
+        createtxt(print) ' create a log file or write in log file
     End Sub
     Delegate Sub delGifVisible(ByVal visible As Boolean) ' UI modify
     Private Sub gifVisible(ByVal visible As Boolean)
@@ -119,7 +114,6 @@ Public Class menu
     End Sub
     Private Sub info() 'create button and local label
         Dim rows As Integer = 100
-        Dim itemquery As Integer = 0
         For Each i In local.Keys
             Dim lb As New Label
             Dim btn As New Button
@@ -128,7 +122,7 @@ Public Class menu
             lb.Size = New Size(300, 20)
             lb.Text = i
             lb.AutoSize = True
-            lb.Cursor = System.Windows.Forms.Cursors.Hand
+            lb.Cursor = Cursors.Hand
             lb.ForeColor = Color.Blue
             btn.Name = i
             btn.Location = New Point(400, rows)
@@ -139,8 +133,7 @@ Public Class menu
             Controls.Add(btn)
             Controls.Add(lb)
             rows += 30
-            itemquery += 1
-            If itemquery = local.Count Then '''
+            If i Like "*Server" Then 'check the name, if name have server, just can not click
                 lb.Enabled = False
             End If
             AddHandler lb.Click, Sub() sub_show(lb) ' if label chick, run form
@@ -184,44 +177,54 @@ Public Class menu
     Private Sub menu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         customer_data()
         info()
-        timer()
+        Dim th As Thread = New Thread(New ThreadStart(AddressOf threading))
+        th.Start() ' start the loop
         setting()
     End Sub
     Private Sub sub_show(ByVal lb As Label)
-        localname = lb.Text
+        localname = lb.Text ' pass name to seat form
         seat.Show()
     End Sub
     Private Sub customer_data()
-        Dim data As customer
         Dim s() As String
         Dim i As Integer = 0
-        Dim item As Integer = 0
-        While (reader.peek() > -1) ' watch all data in txt file until the last word
+        Dim check As Integer
+        Dim first As Boolean = True
+        While reader.peek() > -1 ' watch all data in txt file until the last word
+            Dim data As customer
             line.Add(reader.ReadLine()) ' read each line
             If i > 0 Then
                 s = line(i).split(",") ' each line use commera to assign
+                If first Then 'first time, just one time
+                    check = s.Length ' save last s.length to compare
+                    first = False
+                End If
                 If Not local.ContainsKey(s(1)) Then 'if each line location is not equal local key, just add other local
                     local.Add(s(1), New List(Of customer))
                 End If
-                data = New customer(s(1), False, Today.ToString("D"), s(2), s(0))
-                local.Item(s(1)).Add(data) ' save the information of same location
+                If s.Length < check Then 'if true,it is server
+                    data = New customer(s(1), ConnectSuccess, Today.ToString("D"), s(0))
+                    local.Item(s(1)).Add(data) 'save the information of server
+                    ConnectIp = s(0) 'save the server ip to check connection
+                Else
+                    data = New customer(s(1), False, Today.ToString("D"), s(2), s(0))
+                    local.Item(s(1)).Add(data) ' save the information of same location
+                End If
+                check = s.Length
             End If
             i += 1
-            s = line(line.Count - 1).split(",")
-            ConnectIp = s(0)
         End While
     End Sub
-    Private Sub createtxt(printcustomer As List(Of customer)) 'create a txt file and write in txt file
+    Private Sub createtxt(print As List(Of customer)) 'create a txt file and write in txt file
         Dim filename As String = Today.ToString("D")
         Dim sw As StreamWriter
         Dim path As String = $"C:\Users\PUI\source\repos\iptest\bin\Debug\{filename}.txt" ' path and file name
-        Dim itemquery As Integer = 1
         If File.Exists(path) Then ' if path exist just write, if no just create txt
             sw = File.AppendText(path) 'write in
-            If printcustomer.Count > 0 Then 'if printcustomer query bigger than 0
+            If print.Count > 0 Then 'if printcustomer query bigger than 0
                 sw.WriteLine("-----------------------------------------------------------------------------------------------------")
             End If
-            For Each i In printcustomer
+            For Each i In print
                 sw.WriteLine($"{Today.Now.ToString("G")},{i.location},{i.seat},{i.pinok}")
             Next
         Else
@@ -230,14 +233,10 @@ Public Class menu
             sw.WriteLine("-----------------------------------------------------------------------------------------------------")
             For Each item As KeyValuePair(Of String, List(Of customer)) In local
                 Dim customerlist As List(Of customer) = item.Value
-                If itemquery = local.Count Then
-                    sw.WriteLine($"{Today.Now.ToString("G")},{item.Key},{ConnectSuccess}")
-                Else
-                    For Each i In customerlist
-                        sw.WriteLine($"{Today.Now.ToString("G")},{i.location},{i.seat},{i.pinok}")
-                    Next
-                End If
-                itemquery += 1
+
+                For Each a In customerlist
+                    sw.WriteLine($"{Today.Now.ToString("G")},{a.location},{a.seat},{a.pinok}")
+                Next
             Next
         End If
         sw.Flush()
