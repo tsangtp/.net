@@ -1,8 +1,6 @@
 Imports System.IO
-Imports System.Timers
 Imports System.Data.SqlClient
 Imports System.Threading
-
 Public Class menu
     Dim reader = File.OpenText("C:\Users\PUI\source\repos\iptest\bin\Debug\ip.txt") ' open the txt file
     Dim line As New ArrayList() ' save the txt file each line
@@ -233,7 +231,6 @@ Public Class menu
             sw.WriteLine("-----------------------------------------------------------------------------------------------------")
             For Each item As KeyValuePair(Of String, List(Of customer)) In local
                 Dim customerlist As List(Of customer) = item.Value
-
                 For Each a In customerlist
                     sw.WriteLine($"{Today.Now.ToString("G")},{a.location},{a.seat},{a.pinok}")
                 Next
