@@ -2,11 +2,10 @@ Imports System.IO
 Imports System.Data.SqlClient
 Imports System.Threading
 Public Class menu
-    Dim reader = File.OpenText("C:\Users\PUI\source\repos\iptest\bin\Debug\ip.txt") ' open the txt file
+    Dim reader = File.OpenText("..\ip.txt") ' open the txt file
     Dim line As New ArrayList() ' save the txt file each line
     Public localname As String 'return the location name to seat form
     Dim btns As New List(Of Button) 'save the button
-    Dim gif As New PictureBox 'save the gif
     Public local As New Dictionary(Of String, List(Of customer)) 'save values, location is key, other infomation is values
     Dim initbool = True ' check the first time boolean
     Dim ConnectSuccess As Boolean = True 'save server connection situation
@@ -42,7 +41,6 @@ Public Class menu
         Dim len As Integer = 0 ' button number
         For Each item As KeyValuePair(Of String, List(Of customer)) In local 'each item key and value of local
             Dim customerlist As List(Of customer) = item.Value
-            Dim customerlocation As String = item.Key
             Dim data As customer
             Dim bool As Boolean = True ' check ping
             For Each value In customerlist
@@ -53,14 +51,14 @@ Public Class menu
                         con.Close()
                         If ConnectSuccess = False Then
                             ConnectSuccess = True
-                            data = New customer(value.location, ConnectSuccess, Today.Now.ToString("G"), value.ip)
+                            data = New customer(value.location, ConnectSuccess, value.time, value.ip)
                         Else
                             ConnectSuccess = True
                         End If
                     Catch ex As Exception
                         If ConnectSuccess = True Then
                             ConnectSuccess = False
-                            data = New customer(value.location, ConnectSuccess, Today.Now.ToString("G"), value.ip)
+                            data = New customer(value.location, ConnectSuccess, value.time, value.ip)
                         Else
                             ConnectSuccess = False
                         End If
@@ -99,16 +97,7 @@ Public Class menu
             len += 1
         Next
         initbool = False
-        gifVisible(False) ' gif visible = False is not display
         createtxt(print) ' create a log file or write in log file
-    End Sub
-    Delegate Sub delGifVisible(ByVal visible As Boolean) ' UI modify
-    Private Sub gifVisible(ByVal visible As Boolean)
-        If Me.InvokeRequired Then
-            Me.Invoke(New delGifVisible(AddressOf gifVisible), visible)
-        Else
-            gif.Visible = visible
-        End If
     End Sub
     Private Sub info() 'create button and local label
         Dim rows As Integer = 100
@@ -137,12 +126,7 @@ Public Class menu
             AddHandler lb.Click, Sub() sub_show(lb) ' if label chick, run form
         Next
     End Sub
-    Private Sub setting() ' create a loading gif
-        gif.Size = New Size(250, 250)
-        gif.Location = New Point(450, 150)
-        gif.SizeMode = PictureBoxSizeMode.StretchImage
-        gif.Image = New Bitmap("C:\Users\PUI\source\repos\iptest\bin\Debug\image\loading.gif")
-        Controls.Add(gif)
+    Private Sub setting()
         Dim success As New Label
         Dim btnsuccess As New Button
         success.Name = "Success"
@@ -216,7 +200,7 @@ Public Class menu
     Private Sub createtxt(print As List(Of customer)) 'create a txt file and write in txt file
         Dim filename As String = Today.ToString("D")
         Dim sw As StreamWriter
-        Dim path As String = $"C:\Users\PUI\source\repos\iptest\bin\Debug\{filename}.txt" ' path and file name
+        Dim path As String = $"..\{filename}.txt" ' path and file name
         If File.Exists(path) Then ' if path exist just write, if no just create txt
             sw = File.AppendText(path) 'write in
             If print.Count > 0 Then 'if printcustomer query bigger than 0
