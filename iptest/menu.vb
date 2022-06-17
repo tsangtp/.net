@@ -62,6 +62,7 @@ Public Class menu
                         Else
                             ConnectSuccess = False
                         End If
+                        bool = False
                     End Try
                     If ConnectSuccess = True Then
                         btns(len).BackColor = Color.Green
