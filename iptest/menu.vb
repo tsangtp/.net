@@ -69,7 +69,7 @@ Public Class menu
                         btns(len).BackColor = Color.Red
                     End If
                 Else
-                    If My.Computer.Network.Ping(value.ip, 50) Then
+                    If My.Computer.Network.Ping(value.ip, 500) Then
                         If Not value.pinok = True And Not initbool Then
                             value.pinok = True
                             data = New customer(value.location, value.pinok, value.time, value.seat, value.ip)
